@@ -1,0 +1,30 @@
+version: "3"
+services:
+  murmur:
+    container_name: murmur
+    environment:
+      - MUMBLE_ICESECRETREAD=iceread
+      - MUMBLE_ICESECRETWRITE=icewrite
+      - MUMBLE_SERVERPASSWORD=
+      - MUMBLE_OBFUSCATE=true
+      - MUMBLE_SUGGESTPUSHTOTALK=true
+      - SUPERUSER_PASSWORD=
+    image: containerly/murmur
+    networks:
+      - public_home_stack
+    ports:
+      - 64738:64738/tcp
+      - 64738:64738/udp
+    restart: always
+    volumes:
+      - murmur_data:/data
+
+volumes:
+  murmur_data:
+
+networks:
+  public_home_stack:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.123.0/24
